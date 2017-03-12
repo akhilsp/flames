@@ -1,0 +1,32 @@
+{% extends "user_base.html" %}
+{% block title %}Refil{% endblock %}
+{% block refil %}
+
+
+
+
+                    <h2>
+                        REFIL
+                    </h2>
+                    <div style="text-align:center">
+                        <form method="post" >
+                            {% csrf_token %}
+                            <button id='refilbtn' class="button" type="submit" name="submit" style="height:80px; width:400px; font-size:160%;">Click here to refil</button>
+                        </form>
+                    </div>
+                    <div><br><br>
+                      <table style="width:40%">
+                        <caption>Booking Status</caption>
+                        <tr>
+                            <th>Requested Date</th>
+                            <th>Status</th>
+                        </tr>
+                          {% for list in requests %}
+                              <tr>
+                                 <td><div>{{ list.request_date }}</div></td>
+                                 <td><div>{{ list.status}}</div></td>
+                              </tr>
+                            {% endfor %}
+                      </table>
+                    </div>
+{% endblock %}

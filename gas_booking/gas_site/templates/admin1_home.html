@@ -1,0 +1,38 @@
+{% extends "admin1_base.html" %}
+{% block navbar %}
+    <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">LPG</a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="/admin1/home">Home</a></li>
+                        <li><a href="/admin1/consumers">Consumers</a></li>
+                        <li><a href="/admin1/requests">Requests</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+
+                   <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/admin1/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                    </ul>
+
+                </div>
+          </div>
+        </nav>
+{% endblock %}
+{% block admin_home %}
+    <div class="col-sm-10 text-left">
+        <h1>Welcome</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <hr>
+        <h3>Test</h3>
+        <p>Lorem ipsum...</p>
+    </div>
+{% endblock %}
+

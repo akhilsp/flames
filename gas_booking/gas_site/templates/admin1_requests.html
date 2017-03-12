@@ -1,0 +1,80 @@
+{% extends "admin1_base.html" %}
+{% block style2 %}
+        .scroll
+		{
+		  overflow: scroll;
+          height: 500px;
+          display: block;
+        }
+
+        tbody { border-top: 2px solid black; }
+{% endblock %}
+{% block navbar %}
+    <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">LPG</a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/admin1/home">Home</a></li>
+                        <li><a href="/admin1/consumers">Consumers</a></li>
+                        <li class="active"><a href="/admin1/requests">Requests</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+
+                   <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/admin1/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                    </ul>
+
+                </div>
+          </div>
+        </nav>
+{% endblock %}
+{% block admin_requests %}
+    <h2>REQUESTS</h2>
+        <div><br>
+                <table style="width:100%" class="scroll">
+                    <thead>
+                        <tr>
+                            <th>Order Id</th>
+                            <th>Order type</th>
+                            <th>Request Date</th>
+                            <th>Consumer No.</th>
+                            <th>Status</th>
+                            <th>Status Update</th>
+                            <th>Expected date</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                        {% for ord_con in order_consumer %}
+                            <tbody>
+                                <tr>
+                                    <form class="order" method="post">
+                                        {% csrf_token %}
+                                        <td><div>{{ ord_con.order_id }}</div></td>
+                                        <td><div>{{ ord_con.type }}</div></td>
+                                        <td><div>{{ ord_con.date }}</div></td>
+                                        <td><div>{{ ord_con.consumer_no }}</div></td>
+                                        <td><div>{{ ord_con.status }}</div></td>
+                                        <td><div><input list="option" name="status_update" type="text" placeholder="status"></div></td>
+                                        <datalist id="option">
+                                            <option value="CMP">
+                                            <option value="RJT">
+                                            <option value="NPR">
+                                            <option value="PRG">
+                                        </datalist>
+                                        <td><div><input name="expected_date" type="date" placeholder="select date"></div></td>
+                                        <td><input type="submit" name="id" value="submit" onclick="return value={{ ord_con.order_id }}"></td>
+                                    </form>
+                                </tr>
+                            </tbody>
+                        {% endfor %}
+                </table>
+        </div>
+ {% endblock %}

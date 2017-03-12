@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Email Verification{% endblock %}
+
+{% block content %}
+    <h2 style="color: crimson">Forgot your password?</h2>
+    <h3>We can reset it for you</h3>
+
+    <blockquote >
+        Just enter the email address used for your Bharatgas account
+        below, and we'll email you right away with instructions to
+        access your account.
+    </blockquote>
+
+    <form method="post">
+        {% csrf_token %}
+        Email Id :
+        &emsp;<input type="email" required autocomplete="off" name="email" placeholder="Email" >
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+{% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <h2 style="text-align:center">{% if message.tags %}{% endif %}{{ message }}</h2>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+
+{% endblock %}

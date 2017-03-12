@@ -1,0 +1,30 @@
+{% extends "user_base.html" %}
+{% block title %}Refil{% endblock %}
+{% block refil_success %}
+
+                    <h2>
+                        REFIL
+                    </h2>
+                   {% if messages %}
+                                    <ul class="messages">
+                                        {% for message in messages %}
+                                            <h2 style="text-align:center">{% if message.tags %}{% endif %}{{ message }}</h2>
+                                        {% endfor %}
+                                    </ul>
+                   {% endif %}
+                    <div><br><br>
+                        <table style="width:40%">
+                        <caption>Booking Status</caption>
+                        <tr>
+                            <th>Requested Date</th>
+                            <th>Status</th>
+                        </tr>
+                          {% for list in requests %}
+                              <tr>
+                                 <td><div>{{ list.request_date }}</div></td>
+                                 <td><div>{{ list.status}}</div></td>
+                              </tr>
+                            {% endfor %}
+                      </table>
+                    </div>
+{% endblock %}

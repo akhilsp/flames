@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+
+{% block signup %}
+        <ul class="nav navbar-nav navbar-right"><li><a href="/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li></ul>
+{% endblock %}
+{% block content %}
+ <h2>LOGIN</h2>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <h2 style="text-align:center">{% if message.tags %}{% endif %}{{ message }}</h2>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <form method="post" >
+        {% csrf_token %}
+
+        <center>
+            Username :&emsp;<input type="email" required autocomplete="off" name="email" placeholder="Your email" ><br><br><br>
+            Password :&nbsp;&emsp;<input type="password" required autocomplete="off" name="password" placeholder="Password" ><br>
+            <label align="right"><a href="/email"><font size="2px;"color="red"style="font-family:verdana;"><br>Forgot Password?<br></font></a></label><br>
+            <button type="submit">Log In</button>
+
+        </center>
+    </form>
+
+{% endblock %}
+
