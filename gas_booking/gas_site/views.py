@@ -5,7 +5,7 @@ from django.views.generic import View
 from django.contrib import messages
 from django.contrib.auth import authenticate
 from django.core.mail import send_mail
-from django.template import RequestContext
+from django.template import RequestContext, loader
 from operator import itemgetter
 from .decorators import *
 from django.utils.decorators import method_decorator
@@ -68,7 +68,9 @@ class HomePage(View):
                 elif u.role == 0:
                     return redirect('users/home')
             else:
-                return render(request, 'login.html')
+                # template = loader.get_template('gas_site/login.html')
+                # return HttpResponse(template.render(request))
+                return render(request, 'gas_site/login.html')
         else:
             return render(request, 'login.html')
 
