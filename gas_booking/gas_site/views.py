@@ -19,12 +19,14 @@ def error(request):
     messages.add_message(request, CRITICAL, 'Please enter proper information.')
 
 
-class RegPage(View):
+class SignUpView(View):
 
-    def get(self, request):
+    @staticmethod
+    def get(request):
         return render(request, 'user_reg.html')
 
-    def post(self, request):
+    @staticmethod
+    def post(request):
         form = RegisterUserForm(request.POST)
         if form.is_valid():
             user = User()
@@ -189,13 +191,18 @@ class Order(View):
 
     def get(self, request):
         context = RequestContext(request)
-        consumers = User.objects.filter(role='CO', is_delete=False).order_by('first_name')
+        consumers = User.objects.filter(role=1, is_delete=False).order_by('first_name')
         order_consumer1 = []
         for consumer in consumers:
             orders = consumer.rel_name.all().order_by('request_date')
             for order in orders:
                 order = {
-                    'order_id': order.id, 'type': order.type, 'date': order.request_date, 'consumer': consumer.email, 'consumer_no': consumer.consumer_id, 'status': order.status,
+                    'order_id': order.id,
+                    'type': order.type,
+                    'date': order.request_date,
+                    'consumer': consumer.email,
+                    'consumer_no': consumer.consumer_id,
+                    'status': order.status
                 }
                 order_consumer1.append(order)
         order_consumer2 = sorted(order_consumer1, key=itemgetter('order_id'))
