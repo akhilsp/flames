@@ -5,7 +5,7 @@ from django.views.generic import View
 from django.contrib import messages
 from django.contrib.auth import authenticate
 from django.core.mail import send_mail
-from django.template import RequestContext
+from django.template import RequestContext, loader
 from operator import itemgetter
 from .decorators import *
 from django.utils.decorators import method_decorator
@@ -41,12 +41,15 @@ def login(request):
         return redirect("/home", messages.error(request, "Can't log you in right now. Please try after some time"))
 
 
-class RegPage(View):
+class SignUpView(View):
 
-    def get(self, request):
-        return render(request, 'register.html')
+    @staticmethod
+    def get(request):
+        return render(request, 'user_reg.html')
 
-    def post(self, request):
+
+    @staticmethod
+    def post(request):
         form = RegisterUserForm(request.POST)
         if form.is_valid():
             user = User()
@@ -90,7 +93,9 @@ class HomePage(View):
                 elif u.role == 0:
                     return redirect('users/home')
             else:
-                return render(request, 'login.html')
+                # template = loader.get_template('gas_site/login.html')
+                # return HttpResponse(template.render(request))
+                return render(request, 'gas_site/login.html')
         else:
             return render(request, 'login.html')
 
@@ -209,13 +214,18 @@ class Order(View):
 
     def get(self, request):
         context = RequestContext(request)
-        consumers = User.objects.filter(role='CO', is_delete=False).order_by('first_name')
+        consumers = User.objects.filter(role=1, is_delete=False).order_by('first_name')
         order_consumer1 = []
         for consumer in consumers:
             orders = consumer.rel_name.all().order_by('request_date')
             for order in orders:
                 order = {
-                    'order_id': order.id, 'type': order.type, 'date': order.request_date, 'consumer': consumer.email, 'consumer_no': consumer.consumer_id, 'status': order.status,
+                    'order_id': order.id,
+                    'type': order.type,
+                    'date': order.request_date,
+                    'consumer': consumer.email,
+                    'consumer_no': consumer.consumer_id,
+                    'status': order.status
                 }
                 order_consumer1.append(order)
         order_consumer2 = sorted(order_consumer1, key=itemgetter('order_id'))

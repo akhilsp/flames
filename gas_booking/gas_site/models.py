@@ -7,8 +7,8 @@ from gas_site.managers import *
 class User(AbstractBaseUser):
 
     ROLE_CHOICES = (
-        (0, 'Consumer'),
-        (1, 'Admin'),
+        (0, 'Admin'),
+        (1, 'Consumer'),
     )
     GENDER_CHOICES = (
         ('M', 'Male'),
