@@ -1,12 +1,13 @@
 from django.conf.urls import url
 from .views import *
-from .decorators import *
 
 urlpatterns = [
+    url(r'^login$', login, name='login'),
+
     url(r'^$', HomePage.as_view(), name='home'),
     url(r'^home$', HomePage.as_view(), name='home'),
     url(r'^users/home$', UserPage.as_view(), name='user_home'),
-    url(r'^register$', RegPage.as_view(), name='register'),
+    url(r'^register/$', RegPage.as_view(), name='register'),
     url(r'^users/logout$', logout, name='user_logout'),
     url(r'^admin1/logout$', logout, name='admin_logout'),
     url(r'^email$', ForgotPassword.as_view(), name='email'),
