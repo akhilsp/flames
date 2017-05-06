@@ -1,0 +1,59 @@
+
+.installed.cfg
+bin
+develop-eggs
+dist
+downloads
+eggs
+parts
+src/*.egg-info
+lib
+lib64
+./
+*.pyc
+.project
+.pydevproject
+.idea
+.DS_Store
+local.py
+media/*
+
+# File types #
+##############
+*.swo
+*.swp
+*.swn
+*.log
+*.pyo
+
+# Directories #
+###############
+logs/
+cron_logs/
+
+# OS generated files #
+######################
+*~
+
+# Static folder
+######################
+/static/
+
+
+# Media folder
+######################
+media/
+
+# Local settings
+######################
+gallerybaraweez/settings/local.py
+
+# PyCharm folder
+######################
+.idea/
+
+# Migrations
+######################
+migrations/
+
+
