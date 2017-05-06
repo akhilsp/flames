@@ -57,3 +57,7 @@ gallerybaraweez/settings/local.py
 migrations/
 
 
+.idea/
+**.pyc
+**/migrations/
+local.py

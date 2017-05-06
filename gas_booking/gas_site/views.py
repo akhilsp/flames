@@ -19,11 +19,34 @@ def error(request):
     messages.add_message(request, CRITICAL, 'Please enter proper information.')
 
 
+def login(request):
+    try:
+        user = authenticate(username=request.POST.get('email'), password=request.POST.get('password'))
+        if user and user.role == 0:
+            request.session['userid'] = user.consumer_id
+            request.session['name'] = user.first_name
+            request.session['id'] = user.id
+            request.session.set_expiry(3000)
+            return redirect('/users/home')
+        elif user and user.role == 1:
+            request.session['userid'] = user.username
+            request.session['name'] = user.first_name
+            request.session['id'] = user.id
+            request.session.set_expiry(3000)
+            return redirect('/admin1/home')
+        else:
+            return redirect("/home", messages.error(request, "The email and password you entered doesn't match."))
+    except Exception as e:
+        print(e)
+        return redirect("/home", messages.error(request, "Can't log you in right now. Please try after some time"))
+
+
 class SignUpView(View):
 
     @staticmethod
     def get(request):
         return render(request, 'user_reg.html')
+
 
     @staticmethod
     def post(request):

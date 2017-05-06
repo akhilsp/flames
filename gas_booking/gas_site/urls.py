@@ -1,8 +1,9 @@
 from django.conf.urls import url
 from .views import *
-from .decorators import *
 
 urlpatterns = [
+    url(r'^login$', login, name='login'),
+
     url(r'^$', HomePage.as_view(), name='home'),
     url(r'^home$', HomePage.as_view(), name='home'),
     url(r'^users/home$', UserPage.as_view(), name='user_home'),
