@@ -26,7 +26,7 @@ SECRET_KEY = 'y%a26j4s28li(1z)ml&8$hva)zf0*-shi^k+s)3#onu$1$zpqh'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '*']
+ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition
@@ -120,6 +120,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = 'static/'
 
 AUTH_USER_MODEL = 'gas_site.User'
 

@@ -29,10 +29,10 @@
         <br/><div class="field_wrap"><b>Phone Number:</b><input class="form-control" type="number"  required autocomplete="off" name="phone_no" placeholder="Your Phone Number" onchange="checkPhoneNumber();"/></div>
         <div class="registrationFormAlert" id="divCheckPhoneNumberMatch"></div>
         <br/><div class="field_wrap"><b>Aadhar Number:</b><input class="form-control" type="number" required autocomplete="off" name="aadhar_no" placeholder="Your Aadhar Number"/></div>
-        <br/><div class="field_wrap"><b>Address:</b><input class="form-control" type="text"required autocomplete="off" name="address" placeholder="Your address"/></div>
-        <br/><div class="field_wrap"><b>Location:</b><input class="form-control" type="text"required autocomplete="off" name="locality" placeholder="Your location"/></div>
-        <br/><div class="field_wrap"><b>District:</b><input class="form-control" type="text"required autocomplete="off" name="district" placeholder="Your district"/></div>
-        <br/><div class="field_wrap"><b>State:</b><input class="form-control" type="text"required autocomplete="off" name="state" placeholder="State"/></div>
+        <br/><div class="field_wrap"><b>Address:</b><input class="form-control" type="text" required autocomplete="off" name="address" placeholder="Your address"/></div>
+        <br/><div class="field_wrap"><b>Location:</b><input class="form-control" type="text" required autocomplete="off" name="locality" placeholder="Your location"/></div>
+        <br/><div class="field_wrap"><b>District:</b><input class="form-control" type="text" required autocomplete="off" name="district" placeholder="Your district"/></div>
+        <br/><div class="field_wrap"><b>State:</b><input class="form-control" type="text" required autocomplete="off" name="state" placeholder="State"/></div>
         <br/><div class="field_wrap"><b>Pincode:</b><input class="form-control" type="number"  autocomplete="off" name="pincode" placeholder="Pincode" onchange="checkPincode();"/></div>
         <div class="registrationFormAlert" id="divCheckPincode"></div>
         <br/>
@@ -60,7 +60,7 @@
           function check(st) {
                     if (st.password.value != st.password1.value)
                     {
-                        alert('Those password don\'t match!');
+                        alert('Passwords don\'t match!');
                         return false;
                     } else {
                         return true;

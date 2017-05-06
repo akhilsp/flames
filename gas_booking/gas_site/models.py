@@ -101,7 +101,7 @@ class UserRequests(models.Model):
     request_date = models.DateTimeField(auto_now_add=True)
     expected_date = models.DateField(blank=True, null=True)
     completed_date = models.DateField(blank=True, null=True)
-    status = models.CharField(max_length=3, choices=STATUS, default=NOT_PROCESSED)
+    status = models.CharField(max_length=3, choices=STATUS, default=NOT_PROCESSED)   
 
     def __str__(self):
         return "%s" % self.consumer_id
