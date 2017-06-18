@@ -3,6 +3,12 @@ from django.contrib.auth.models import AbstractBaseUser
 from gas_site.validators import *
 from gas_site.managers import *
 
+import uuid
+
+
+def get_unique_id():
+    return str(uuid.uuid4())
+
 
 class User(AbstractBaseUser):
 
@@ -19,8 +25,8 @@ class User(AbstractBaseUser):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     email = models.EmailField(unique=True)
-    role = models.IntegerField(choices=ROLE_CHOICES, default=0)
-    consumer_id = models.CharField(max_length=8, null=True, blank=True)
+    role = models.IntegerField(choices=ROLE_CHOICES, default=1)
+    consumer_id = models.CharField(max_length=36, default=get_unique_id)
 
     phone_no = models.CharField(validators=[phone_validator], max_length=17, null=True, blank=True)
     aadhar_no = models.CharField(validators=[aadhar_validator], max_length=12, null=True, blank=True)
@@ -28,7 +34,7 @@ class User(AbstractBaseUser):
 
     house_name = models.CharField(max_length=300, null=True, blank=True)
     street = models.CharField(max_length=50, null=True, blank=True)
-    district = models.CharField(max_length=50, null=True, blank=True)
+    city = models.CharField(max_length=50, null=True, blank=True)
     state = models.CharField(max_length=50, null=True, blank=True)
     pin_code = models.CharField(max_length=6, null=True, blank=True)
 
@@ -39,14 +45,14 @@ class User(AbstractBaseUser):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'phone_no']
+    REQUIRED_FIELDS = ['first_name', 'last_name']
 
     def __init__(self, *args, **kwargs):
         super(User, self).__init__(*args, **kwargs)
         self._password = None
 
     def __str__(self):
-        return str(self.id) + '. ' + self.get_full_name()
+        return str(self.id) + ' ' + self.get_full_name()
 
     def get_full_name(self):
         return self.first_name + ' ' + self.last_name

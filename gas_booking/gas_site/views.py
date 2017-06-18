@@ -1,17 +1,17 @@
-from .forms import RegisterUserForm, EmailForm, NewpasswordForm
+from gas_site.forms import SignUpForm, EmailForm, NewpasswordForm
 from django.shortcuts import render, redirect, HttpResponse
-from .models import *
+from gas_site.models import *
 from django.views.generic import View
 from django.contrib import messages
 from django.contrib.auth import authenticate
 from django.core.mail import send_mail
-from django.template import RequestContext, loader
+from django.template import RequestContext
 from operator import itemgetter
-from .decorators import *
+from gas_site.decorators import *
 from django.utils.decorators import method_decorator
 
 
-E_mail = ''
+email = ''
 CRITICAL = 50
 
 
@@ -19,63 +19,63 @@ def error(request):
     messages.add_message(request, CRITICAL, 'Please enter proper information.')
 
 
-def login(request):
-    try:
-        user = authenticate(username=request.POST.get('email'), password=request.POST.get('password'))
-        if user and user.role == 0:
-            request.session['userid'] = user.consumer_id
-            request.session['name'] = user.first_name
-            request.session['id'] = user.id
-            request.session.set_expiry(3000)
-            return redirect('/users/home')
-        elif user and user.role == 1:
-            request.session['userid'] = user.username
-            request.session['name'] = user.first_name
-            request.session['id'] = user.id
-            request.session.set_expiry(3000)
-            return redirect('/admin1/home')
-        else:
-            return redirect("/home", messages.error(request, "The email and password you entered doesn't match."))
-    except Exception as e:
-        print(e)
-        return redirect("/home", messages.error(request, "Can't log you in right now. Please try after some time"))
+class LoginView(View):
+
+    @staticmethod
+    def get(request):
+        return render(request, 'login.html')
+
+    @staticmethod
+    def post(request):
+        try:
+            u = User.objects.get(email=request.POST.get('email'))
+            user = authenticate(email=request.POST.get('email'), password=request.POST.get('password'))
+            if user and user.role == 0:
+                request.session['userid'] = user.consumer_id
+                request.session['name'] = user.first_name
+                request.session['id'] = user.id
+                request.session.set_expiry(3000)
+                return redirect('/users/home')
+            elif user and user.role == 1:
+                request.session['userid'] = user.username
+                request.session['name'] = user.first_name
+                request.session['id'] = user.id
+                request.session.set_expiry(3000)
+                return redirect('/admin_site/home')
+            else:
+                return redirect("/login/", messages.error(request, "The email and password you entered doesn't match."))
+        except Exception as e:
+            print(e)
+            return redirect("/login/", messages.error(request, "Can't log you in right now. Please try after some time"))
 
 
 class SignUpView(View):
 
     @staticmethod
     def get(request):
-        return render(request, 'user_reg.html')
-
+        return render(request, 'signup.html')
 
     @staticmethod
     def post(request):
-        form = RegisterUserForm(request.POST)
+        form = SignUpForm(request.POST)
         if form.is_valid():
-            user = User()
-            user.username = form.cleaned_data['email']
-            user.first_name = form.cleaned_data['first_name']
-            user.last_name = form.cleaned_data['last_name']
-            user.email = form.cleaned_data['email']
-            user.phone_no = form.cleaned_data['phone_no']
-            user.aadhar_no = form.cleaned_data["aadhar_no"]
-            user.set_password(form.cleaned_data['password'])
-            user.address = form.cleaned_data['address']
-            user.locality = form.cleaned_data['locality']
-            user.district = form.cleaned_data['district']
-            user.state = form.cleaned_data['state']
-            user.pincode = form.cleaned_data['pincode']
+            user = User.objects.create(**form.cleaned_data)
+            # user.first_name = form.cleaned_data['first_name']
+            # user.last_name = form.cleaned_data['last_name']
+            # user.email = form.cleaned_data['email']
+            # user.set_password(form.cleaned_data['password'])
+            # user = form.save()
 
-            if not user.save():
+            if user:
                 print("user saved")
-                user.consumer_id = 'CO' + str(user.id + 100000)
-                user.save()
+                # user.consumer_id = 'CO' + str(user.id + 100000)
+                # user.save()
                 return redirect("/home", messages.success(request, 'Registered successfully!'))
             else:
-                return redirect("/register", messages.error(request, 'Registration Failed'))
+                return redirect("/signup", messages.error(request, 'Registration Failed'))
 
         else:
-            return redirect("/register", error(request))
+            return redirect("/signup", error(request))
 
 
 class HomePage(View):
@@ -97,7 +97,7 @@ class HomePage(View):
                 # return HttpResponse(template.render(request))
                 return render(request, 'gas_site/login.html')
         else:
-            return render(request, 'login.html')
+            return redirect('/login/')
 
     @staticmethod
     def post(request):
@@ -144,16 +144,16 @@ class ForgotPassword(View):
         return render(request, 'enter_email.html')
 
     def post(self, request):
-        global E_mail
+        global email
         form = EmailForm(request.POST)
-        E_mail = form.data["email"]
-        user = User.objects.get(email=E_mail)
+        email = form.data["email"]
+        user = User.objects.get(email=email)
         if user is not None:
             send_mail(
                 'Bharatgas Password Reset',
                 'Hi',
                 'vjithin34@gmail.com',
-                [E_mail],
+                [email],
                 html_message='<p>'
                              'Please use the link to reset your password :'
                              '<a href="http://127.0.0.1:8000/password/changing">Reset your password.</a><br>'
@@ -172,8 +172,8 @@ class PasswordChange(ForgotPassword):
         return render(request, 'password_changing.html')
 
     def post(self, request):
-        global E_mail
-        user1 = User.objects.get(email=E_mail)
+        global email
+        user1 = User.objects.get(email=email)
         form = NewpasswordForm(request.POST)
         user1.set_password(form.data['password'])
         try:

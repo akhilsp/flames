@@ -2,12 +2,12 @@ from django.conf.urls import url
 from .views import *
 
 urlpatterns = [
-    url(r'^login$', login, name='login'),
+    url(r'^login/$', LoginView.as_view(), name='login'),
+    url(r'^signup/$', SignUpView.as_view(), name='signup'),
 
     url(r'^$', HomePage.as_view(), name='home'),
-    url(r'^home$', HomePage.as_view(), name='home'),
+    url(r'^home/$', HomePage.as_view(), name='home'),
     url(r'^users/home$', UserPage.as_view(), name='user_home'),
-    url(r'^register$', SignUpView.as_view(), name='register'),
     url(r'^users/logout$', logout, name='user_logout'),
     url(r'^admin1/logout$', logout, name='admin_logout'),
     url(r'^email$', ForgotPassword.as_view(), name='email'),

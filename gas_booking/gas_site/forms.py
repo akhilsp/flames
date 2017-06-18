@@ -1,19 +1,20 @@
 from django import forms
+from gas_site.models import User
 
 
-class RegisterUserForm(forms.Form):
-    first_name = forms.CharField(max_length=100)
-    last_name = forms.CharField(max_length=100)
-    email = forms.EmailField(max_length=254)
-    password = forms.CharField(max_length=50)
-    password1 = forms.CharField(max_length=50)
-    phone_no = forms.CharField(max_length=20)
-    aadhar_no = forms.CharField(max_length=15)
-    address = forms.CharField(max_length=300)
-    locality = forms.CharField(max_length=50)
-    district = forms.CharField(max_length=50)
-    state = forms.CharField(max_length=50)
-    pincode = forms.CharField(max_length=6)
+class SignUpForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email', 'password']
+
+
+class UpdateDetailsForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email', 'password', 'phone_no', 'aadhar_no', 'gender', 'house_name',
+                  'street', 'city', 'state', 'pin_code']
 
 
 class LoginForm(forms.Form):

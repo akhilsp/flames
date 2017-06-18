@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 """
 
 import os
-from .local import *
+from gas_pro.local import *
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -26,7 +26,7 @@ SECRET_KEY = 'y%a26j4s28li(1z)ml&8$hva)zf0*-shi^k+s)3#onu$1$zpqh'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
