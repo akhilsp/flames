@@ -47,4 +47,3 @@ def admin_login_required(f):
     adgo.__doc__ = f.__doc__
     adgo.__name__ = f.__name__
     return adgo
-

@@ -76,6 +76,7 @@ class User(AbstractBaseUser):
 
     def delete(self, *args, **kwargs):
         self.is_active = False
+        self.save()
         return self
 
 
